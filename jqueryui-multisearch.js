@@ -1,7 +1,7 @@
 // Modified by Gourav Goyal [alias : jerrygoyal]
 /* Changes Applied
--Disable deletion of tags by backspace key
-
+- Disable deletion of tags by backspace key
+- On focus-in event show drop down menu of tags
 
 */
 /*!
@@ -213,7 +213,12 @@
          *  The default is to look for the search string anywhere in the target field.  If you want to match only from
          *  the leading edge of the field, you'll need to override this function.
          */
-         localMatcher: function( needle, haystack ) { return haystack.toLowerCase().indexOf( needle.toLowerCase() ) > -1; }
+         localMatcher: function( needle, haystack ) {
+			 // Return true if it's a focus-in event i.e. value is mxfocus
+			 if(needle=="mxfocusin")
+			 return true;
+			 return haystack.toLowerCase().indexOf( needle.toLowerCase() ) > -1; 
+			 }
       },
 
       /**
@@ -449,6 +454,10 @@
 
          var self = this;
          $( document ).on( 'click.multisearch', function( event ) {
+			 
+			  // On focus-in event show all tags.
+			 self.search_text="mxfocusin";
+			 self._remoteSearch();
 
             if ( self.element.has( event.target ).length === 0 )
                self._hidePicker();
