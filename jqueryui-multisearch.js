@@ -2,6 +2,7 @@
 /* Changes Applied
 - Disable deletion of tags by backspace key
 - On focus-in event show drop down menu of tags
+- Don't show applied tags in dropdown menu tags list
 
 */
 /*!
@@ -528,6 +529,16 @@
 
             this._remoteSearch = function() {
 
+			 // Don't show applied tags in dropdown menu tags list
+            var TagsArray = opt.source;
+            var AppliedTags = this.itemData;
+            Object.keys(AppliedTags).forEach(function (key) {
+            TagsArray = TagsArray
+                       .filter(function (el) {
+                                return el.name !== AppliedTags[key].name;
+                               });
+            });
+			
                var results = _.filter( opt.source, function ( item ) { return self._matcher.call( self, item ); });
 
                self.optionData = results.slice( 0, opt.maxShowOptions );
