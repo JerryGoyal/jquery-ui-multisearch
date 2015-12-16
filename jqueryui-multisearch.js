@@ -1,3 +1,9 @@
+// Modified by Gourav Goyal [alias : jerrygoyal]
+/* Changes Applied
+-Disable deletion of tags by backspace key
+
+
+*/
 /*!
  * Copyright (c) 2013 Ben Olson (https://github.com/bseth99/jqueryui-multisearch)
  *
@@ -640,6 +646,8 @@
                      // No more characters.  Start deleting existing
                      // items that have been selected.
                      if ( this.options.inputPosition == 'end' ) {
+						 // Return false to disable deletion of tags by backspace key
+						 return false;
                         if ( this.itemData.length > 0 ) {
                            if ( this.itemIndex > -1 && this.itemIndex < this.itemData.length ) {
                               this._removeSelectedItem();
