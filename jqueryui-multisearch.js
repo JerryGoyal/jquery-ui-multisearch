@@ -539,10 +539,9 @@
                                });
             });
 			
-               var results = _.filter( opt.source, function ( item ) { return self._matcher.call( self, item ); });
-
-               self.optionData = results.slice( 0, opt.maxShowOptions );
-               self._renderPickerItems();
+               var results = _.filter( TagsArray, function ( item ) { return self._matcher.call( self, item ); });
+            self.optionData = results.slice( 0, opt.maxShowOptions );
+            self._renderPickerItems();
             }
          }
 
