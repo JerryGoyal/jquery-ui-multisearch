@@ -4,6 +4,7 @@
 - On focus-in event show drop down menu of tags
 - Don't show applied tags in dropdown menu tags list
 
+
 */
 /*!
  * Copyright (c) 2013 Ben Olson (https://github.com/bseth99/jqueryui-multisearch)
@@ -698,6 +699,7 @@
                   } else {
 
                      if ( !this.options.preventNotFound ) {
+						  if(this.search_text!="mxfocusin")
                         this._addItem( this.options.buildNewItem( this.search_text ) );
                      }
                   }
