@@ -3,6 +3,7 @@
 - Disable deletion of tags by backspace key
 - On focus-in event show drop down menu of tags
 - Don't show applied tags in dropdown menu tags list
+- bug fixed for notfound object always returning false in "adding" event
 
 
 */
@@ -868,7 +869,10 @@
 
          if ( item ) {
 
-            notFound = !_.values( _.pick( item, keys ) ).join('').length;
+           // bug fixed for notfound object always returning false in "adding" event
+            notFound = (typeof (_.find(this.options.source, function(goal) {
+                return goal.name.toLowerCase() == item.name.toLowerCase();
+            }))== "undefined");
             if ( !notFound && this.options.preventDuplicates ) {
 
                addOk = ( idx = this._findByKeys( item ) ) == -1;
