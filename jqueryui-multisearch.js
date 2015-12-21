@@ -1,9 +1,10 @@
-// Modified by Gourav Goyal [alias : jerrygoyal]
+// Modified by Gourav Goyal [alias: jerrygoyal]
 /* Changes Applied
 - Disable deletion of tags by backspace key
 - On focus-in event show drop down menu of tags
 - Don't show applied tags in dropdown menu tags list
 - bug fixed for notfound object always returning false in "adding" event
+- Show default tags in popup (if any)
 
 
 */
@@ -453,6 +454,7 @@
          this.$itemList.on( 'click.multisearch mouseenter.multisearch mouseleave keydown.multisearch', '[data-role="selected-item"]', $.proxy( this, '_processSelected' ) );
 
          this._initAutoWidth();
+		 this._initAddDefaultTags();
          this._initRemote();
 
          var self = this;
@@ -578,6 +580,51 @@
 
       },
 
+	   // Show default tags in popup (if any)
+       _initAddDefaultTags: function() {
+      
+         if ( this.options.defaultTags!=null ) {
+
+           debugger;
+           
+           for ( var i = 0; i < this.options.defaultTags.length; i++)
+           {
+             var item = {name:this.options.defaultTags[i]};
+             var opt = 	 {},
+             where = this.options.inputPosition,
+             addOk = true,
+             notFound = false,
+             silent = opt.silent || false,
+             at = opt.at === null || typeof( opt.at ) == 'undefined' ? ( where == 'start' ? 0 : this.itemData.length ) : opt.at,
+             keys = this.options.keyAttrs,
+             idx, $el;
+
+            $el = $( this.options.formatSelectedItem( item ) ).attr({ 'data-role': 'selected-item', 'tabIndex': -1 });
+                  if ( at == this.itemData.length ) {
+
+                     if ( this.$itemList.has( this.$input ).length > 0 ) {
+
+                        if ( where == 'start' )
+                           $el.insertAfter( this.$input );
+                        else
+                           $el.insertBefore( this.$input );
+
+                     } else {
+                        this.$itemList.append( $el );
+                     }
+
+                     this.itemData.push( item );
+
+                  } else {
+                     $el.insertBefore( this._getSelectedChildren().eq( at ) );
+                     this.itemData.splice( at, 0, item );
+                  }
+           }
+
+         }
+
+      },
+	  
       _destroy: function() {
 
          this.element.removeClass( 'osb-multisearch' );
