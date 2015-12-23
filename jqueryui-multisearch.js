@@ -5,6 +5,7 @@
 - Don't show applied tags in dropdown menu tags list
 - bug fixed for notfound object always returning false in "adding" event
 - Show default tags in popup (if any)
+- hide drop down after removing tag (bug fix)
 
 
 */
@@ -972,7 +973,8 @@
       _removeSelectedItem: function() {
 
          this._removeItem( this.itemIndex );
-
+		// hide drop down after removing tag (bug fix)
+		this._hidePicker();
       },
 
       _removeItem: function( idx, options ) {
