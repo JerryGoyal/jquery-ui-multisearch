@@ -8,6 +8,7 @@
 - hide drop down after removing tag (bug fix)
 - Add removed item to picker list again
 - bug fix for left, right keys not working
+- show picker list again when backspace entered
 
 */
 /*!
@@ -535,17 +536,16 @@
 
             this._remoteSearch = function() {
 
-			 // Don't show applied tags in dropdown menu tags list
-            var TagsArray = opt.source;
+			  // Don't show applied tags in dropdown menu tags list
             var AppliedTags = this.itemData;
             Object.keys(AppliedTags).forEach(function (key) {
-            TagsArray = TagsArray
+            opt.source = opt.source
                        .filter(function (el) {
                                 return el.name !== AppliedTags[key].name;
                                });
             });
 			
-               var results = _.filter( TagsArray, function ( item ) { return self._matcher.call( self, item ); });
+               var results = _.filter( opt.source, function ( item ) { return self._matcher.call( self, item ); });
             self.optionData = results.slice( 0, opt.maxShowOptions );
             self._renderPickerItems();
             }
@@ -736,8 +736,9 @@
                      return false;
                  } else if( this.$input.val().length === 1 ) {
                      // The last character is going to be
-                     // deleted.  Hide the picker.
-                     this._hidePicker();
+                     // deleted.  show the picker.
+                     this.search_text="mxfocusin";
+                     this._remoteSearch();
                  } else {
                      // New search string
                      _.defer( $.proxy( this, '_search' ) );
