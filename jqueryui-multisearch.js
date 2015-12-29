@@ -6,7 +6,7 @@
 - bug fixed for notfound object always returning false in "adding" event
 - Show default tags in popup (if any)
 - hide drop down after removing tag (bug fix)
-
+- Add removed item to picker list again
 
 */
 /*!
@@ -1000,7 +1000,9 @@
                   }
 
                }
-
+				 // Add removed item to picker list again
+                  this.options.source.push(item);
+				
                if ( !silent )
                   this._trigger( 'removed', null, { data: item } );
             }
