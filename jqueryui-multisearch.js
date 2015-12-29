@@ -7,6 +7,7 @@
 - Show default tags in popup (if any)
 - hide drop down after removing tag (bug fix)
 - Add removed item to picker list again
+- bug fix for left, right keys not working
 
 */
 /*!
@@ -657,6 +658,11 @@
              case jQuery.ui.keyCode.RIGHT:
 
                 if( this.$input.val().length ) {
+				
+				// bug fix for left, right keys not working
+                if ( event.keyCode === jQuery.ui.keyCode.LEFT || event.keyCode === jQuery.ui.keyCode.RIGHT ) {
+                    return true;
+                }
 
                   if ( event.keyCode === jQuery.ui.keyCode.DOWN || event.keyCode === jQuery.ui.keyCode.RIGHT ) {
                      if ( this.optionIndex < this.options.maxShowOptions - 1 )
@@ -1001,7 +1007,10 @@
 
                }
 				 // Add removed item to picker list again
-                  this.options.source.push(item);
+               this.options.source.push({name:item.name});
+               this.options.source.sort(function(a,b){
+                  return a.name.toLowerCase().localeCompare(b.name.toLowerCase());
+               });
 				
                if ( !silent )
                   this._trigger( 'removed', null, { data: item } );
