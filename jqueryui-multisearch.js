@@ -9,6 +9,7 @@
 - Add removed item to picker list again
 - bug fix for left, right keys not working
 - show picker list again when backspace entered
+- Do not allow duplicate tags to be added when entering manually
 
 */
 /*!
@@ -924,10 +925,21 @@
 
          if ( item ) {
 
-           // bug fixed for notfound object always returning false in "adding" event
+           item.name = item.name.toLowerCase();
+         // bug fixed for notfound object always returning false in "adding" event
             notFound = (typeof (_.find(this.options.source, function(goal) {
-                return goal.name.toLowerCase() == item.name.toLowerCase();
+                return goal.name.toLowerCase() == item.name;
             }))== "undefined");
+
+            // Do not allow duplicate tags to be added when entering manually
+            if ( this._findByKeys( item )!=-1 && this.options.preventDuplicates ) {
+
+               this.$input.val('');
+                  this.search_text = '';
+                  return;
+
+            }
+			
             if ( !notFound && this.options.preventDuplicates ) {
 
                addOk = ( idx = this._findByKeys( item ) ) == -1;
