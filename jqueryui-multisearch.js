@@ -10,6 +10,7 @@
 - bug fix for left, right keys not working
 - show picker list again when backspace entered
 - Do not allow duplicate tags to be added when entering manually
+- bug fix: up, down keys should work even when nothing is entered
 
 */
 /*!
@@ -658,7 +659,8 @@
              case jQuery.ui.keyCode.LEFT:
              case jQuery.ui.keyCode.RIGHT:
 
-                if( this.$input.val().length ) {
+                //if( this.$input.val().length ) {
+				if( true ) {
 				
 				// bug fix for left, right keys not working
                 if ( event.keyCode === jQuery.ui.keyCode.LEFT || event.keyCode === jQuery.ui.keyCode.RIGHT ) {
